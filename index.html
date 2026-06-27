@@ -2034,19 +2034,7 @@ function buildSidebar() {
     el.innerHTML = `<div class="v-sym" style="color:${eraColor(v.era)}">${branchSym(v.branch)}</div><div style="flex:1;min-width:0"><div class="v-name">${displayName}</div><div class="v-era">${normEra(v.era)}</div></div>`;
     el.addEventListener('click', () => { map.flyTo([v.lat,v.lng],19,{duration:1.0}); setTimeout(()=>openPopup(v,idx),350); });
     list.appendChild(el);
-  });
-  none.style.display = shown===0 ? 'block' : 'none';
-}
-
-function updateCount() {
-  const showing = veterans.filter(v => activeEras.has(normEra(v.era))).length;
-  const total = veterans.length;
-  document.getElementById('vet-count').textContent = showing===total ? `${total} Documented Veterans` : `${showing} of ${total} Veterans`;
-}
-document.getElementById('vet-count').textContent = veterans.length === 0 ? 'Field Survey In Progress' : `${veterans.length} Documented Veterans`;
-
-const eraCounts = {};
-veterans.forEach(v => { const e=normEra(v.era); eraCounts[e]=(eraCounts[e]||0)+1; },
+  },
 
     {
       "id": "silinski_arthur_aaf_wwii",
@@ -2161,7 +2149,10 @@ veterans.forEach(v => { const e=normEra(v.era); eraCounts[e]=(eraCounts[e]||0)+1
       "source": "gravestone",
       "story": "Richard E. Young served as a Yeoman 2nd Class (Y2) in the United States Navy during World War II. Yeomen handled the vital administrative and clerical work that kept naval operations running — from orders and correspondence to personnel records. Born March 12, 1926, Richard passed away January 26, 2007, having lived 80 years. If you have further information about this veteran, please contact the City of Holyoke Veterans Graves Officer at (413) 322-5630 at 310 Appleton Street, 1st Floor, Holyoke, MA 01040."
     }
-);
+
+];
+
+veterans.forEach(v => { const e=normEra(v.era); eraCounts[e]=(eraCounts[e]||0)+1; })
 
 ERA_ORDER.forEach(era => {
   if (!eraCounts[era]) return;
